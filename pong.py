@@ -33,6 +33,11 @@ ball.shape('circle')
 ball.color('pink')
 ball.penup()
 ball.goto(0, 0)
+# Moves ball up and diagonal 2px
+# Right 2 px
+ball.dx = 2
+# Up 2 px
+ball.dy = -2
 
 # Function
 # Move paddles up and down
@@ -69,3 +74,34 @@ wn.onkeypress(paddle_right_down, "l")
 # Screen updates when loop runs
 while True:
     wn.update()
+
+    # Move the ball
+    # Current x coord
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+    # Border - top and bottom
+    # Height: 300 for top & bottom - ball: 20 (10 from ea)
+    # Reverse ball direction
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball.dy += -1
+
+    if ball.ycor() < -290:
+        ball.sety(290)
+        ball.dy += -1
+    # If ball is past the paddle and off screen
+    if ball.xcor() > 390:
+        ball.goto(0, 0)
+        ball.dx *= -1
+
+    if ball.xcor() < -390:
+        ball.goto(0, 0)
+        ball.dx *= -1
+
+    # Paddle and ball collisions
+    if ball.xcor() > 340 and ball.xcor() < 350 and (ball.ycor() < paddle_right.ycor() + 40 and ball.ycor() > paddle_right.ycor() -50):
+        ball.setx(340)
+        ball.dx *= -1
+
+
